@@ -1,0 +1,15 @@
+.comment id="comment-#{comment.id}"
+  - cache [ 'comment', comment ] do
+    .col-md-8
+      = comment.body
+      p
+        ||
+        i.glyphicon.glyphicon-user
+        = link_to comment.user.name, comment.user
+        ||
+        i.glyphicon.glyphicon-calendar
+        = comment.created_at.strftime("%d.%m.%y")
+        ||
+  .col-md-1
+      - if can? :modify, comment
+        = link_to '', comment_path(comment),remote: true, method: :delete, class: 'glyphicon glyphicon-trash'

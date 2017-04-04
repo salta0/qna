@@ -1,0 +1,4 @@
+p
+div class="item"
+  h2 
+   a href="/questions/#{@question.id}" #{@question.title}

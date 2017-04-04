@@ -1,0 +1,6 @@
+DailyMailer#digest
+
+= @greeting
+ul
+  - @questions.each do |question|
+    li = link_to question.title, question_url(question)

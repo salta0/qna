@@ -1,0 +1,16 @@
+- if object.attachments.present?
+  p Прикркпленные файлы:
+  ul
+    - object.attachments.each do |a|
+      .attachment id="attachment-#{a.id}"
+        li
+          hr
+          - cache [ 'attachment', a ] do
+            - if a.persisted?
+              .file-link
+                = link_to a.file.identifier, a.file.url
+          - if can? :destroy, a
+            .remove-file
+              = link_to '', attachment_path(a), method: :delete, remote: true,
+                class: 'glyphicon glyphicon-trash'
+          hr

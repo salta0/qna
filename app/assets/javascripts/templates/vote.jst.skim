@@ -1,0 +1,18 @@
+.voting id="voting-for-#{@object.name}-#{@object.item_id}" data-obj="#{@object.name}" data-id="#{@object.item_id}"
+  .col-xs-6.col-sm-4.col-md-4
+    .col-xs-1
+      - unless @object.voted
+        a href="/#{@object.name}/#{@object.item_id}/vote_down" class="button button-down glyphicon glyphicon-chevron-down" data-remote="true" rel="nofollow" data-method="patch"
+
+    .col-xs-1
+      div class="#{@object.name}-rating"
+        p #{@object.rating}
+
+    .col-xs-1
+      - unless @object.voted
+        a class="button button-up glyphicon glyphicon-chevron-up" data-remote="true" rel="nofollow" data-method="patch" href="/#{@object.name}/#{@object.item_id}/vote_up"
+
+  .col-xs-12
+    .reset-vote-link
+      - if @object.voted
+        a data-remote="true" rel="nofollow" data-method="delete" href="/#{@object.name}/#{@object.item_id}/vote_reset" class="button button-reset" Переголосовать

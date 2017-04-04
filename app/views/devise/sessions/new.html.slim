@@ -1,0 +1,27 @@
+.container
+  .row
+    .col-xs-12
+      h2.text-center Аутентификация
+  .row
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal' }) do |f|
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.input :email, label: "E-mail"
+
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.input :password, label: "Пароль", autocomplete: "off"
+
+      - if devise_mapping.rememberable?
+        .form-group
+          .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+            .checkbox
+              = f.input :remember_me, inline_label: "Запомнить меня", as: :boolean
+
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.submit "Войти", class: "btn btn-primary"
+
+      .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+        br
+        = render "devise/shared/links"

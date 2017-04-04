@@ -1,0 +1,6 @@
+.subscription
+  - if signed_in?
+    - unless current_user.subscribed?(@question)
+      = link_to '', question_subscriptions_path(@question), method: :post, remote: true, class: 'subscribe-link glyphicon glyphicon-star-empty', title: "Добавить в избранное. На вашу почту будут приходить оповещения о появлении нового ответа."
+    - if can? :destroy, @subscription
+      = link_to '',  question_subscription_path(@question, @subscription), method: :delete, remote: true, class: 'unsubscribe-link glyphicon glyphicon-star', title: "Вопрос добавлен в избранное. Кликните для отмены."

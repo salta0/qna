@@ -1,0 +1,19 @@
+- obj_name = object.class.name.downcase.pluralize
+div id="voting-for-#{obj_name}-#{object.id}" class="voting" data-obj="#{obj_name}" data-id="#{object.id}"
+  .col-xs-6.col-sm-4.col-md-4
+    .col-xs-1
+      - if can? :vote, object
+        = link_to '', down, method: :patch, remote: true, class: "button button-down glyphicon glyphicon-chevron-down"
+
+    .col-xs-1
+      - cache [ 'rating', object ] do
+        div class="#{obj_name}-rating"
+          p title="Рейтинг" = object.rating
+
+    .col-xs-1
+      - if can? :vote, object
+        = link_to '', up, method: :patch, remote: true, class: "button button-up glyphicon glyphicon-chevron-up"
+
+  .col-xs-6.col-sm-4.col-md-4.button-reset
+    - if can? :vote_reset, object
+      = link_to 'Переголосовать', reset, method: :delete, remote: true, title: "Отменить свой голос"

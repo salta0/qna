@@ -1,0 +1,6 @@
+div class="item"
+  h2 = result.body
+  - if result.commentable_type == 'Question'
+    p = link_to result.commentable.title, result.commentable
+  - else 
+    p = link_to result.commentable.question.title, result.commentable.question

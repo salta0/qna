@@ -1,0 +1,7 @@
+= form_tag search_results_index_path, method: 'get', class: "navbar-form navbar-right", role: "search"
+  .form-group
+    = text_field_tag :query, params[:query], placeholder: "Искать по", class: "form-control"
+  .form-group
+    = select_tag :subject, options_for_select([['всему', 'all'], ['пользователям', 'user'], ['вопросам', 'question'], ['ответам', 'answer'], ['комментариям', 'comment']]), class: "form-control"
+  .form-group
+    = button_tag "", type: 'submit', class: "search-button glyphicon glyphicon-search"

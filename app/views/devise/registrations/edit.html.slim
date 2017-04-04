@@ -1,0 +1,37 @@
+.container
+  .row
+    .col-xs-12.text-center
+      h2 Настройки аккаунта
+
+    = simple_form_for( resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-horizontal' }) do |f|
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.input :email, label: "E-mail", autofocus: true
+          - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+            p Ожидается подтверждение для: #{resource.unconfirmed_email}
+
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.input :password, label: "Пароль", autocomplete: "off",
+            hint: "оставте это поле пустым, если не хотите менять пароль"
+
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.input :password_confirmation, label: "Подтверждение паролья", autocomplete: "off"
+
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.input :current_password, label: "Текущий пароль",
+            hint: "введите свой текущий пароль",autocomplete: "off"
+
+      .form-group
+        .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+          = f.submit "Сохранить", class: "btn btn-primary"
+
+  .row
+    .col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+      h3 Удалить аккаунт
+      = button_to "Удалить", registration_path(resource_name),
+        data: { confirm: "Вы уверены?" }, method: :delete, class: "btn btn-danger"
+      br
+      = link_to "Назад", :back

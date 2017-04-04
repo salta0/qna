@@ -1,0 +1,6 @@
+#attachments
+  = f.fields_for :attachments, object do |a|
+    = render 'attachments/attachment_fields', f: a
+    .links
+      = link_to_add_association 'Добавить', f, :attachments, partial: 'attachments/attachment_fields', title: "Добавить еще один файл"
+    = f.submit 'Прикрепить', class: "btn btn-primary"

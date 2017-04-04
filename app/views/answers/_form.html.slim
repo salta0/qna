@@ -1,0 +1,11 @@
+.col-xs-12.col-sm-offset-2.col-sm-8.col-md-offset-3.col-md-6
+  hr
+  = simple_form_for [@question, @answer], remote: true do |f|
+    = f.input :body, label: 'Ваш ответ'
+    .answer-errors
+    br
+    = f.fields_for :attachments, @answer.attachments.build do |a|
+      = render 'attachments/attachment_fields', f: a
+      .links
+        = link_to_add_association "Добавить", f, :attachments, partial: 'attachments/attachment_fields', title: "Добавить еще один файл"
+    = f.submit "Ответить", class: "btn btn-primary"

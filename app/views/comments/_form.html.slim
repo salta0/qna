@@ -1,0 +1,4 @@
+= simple_form_for [commentable, comment], remote: true do |f|
+  .comment-errors
+  = f.input :body, placeholder: "Оставте ваш комментарий"
+  = button_tag "Комментировать", type: 'submit', class: "btn btn-primary", title: "Оставить комментарий"

@@ -1,0 +1,6 @@
+- if @results.blank?
+  h2 Поиск не дал результатов
+- else
+  h2 Результаты поиска:
+  - @results.each do |result|   
+    = render "#{result.class.name.downcase}", result: result

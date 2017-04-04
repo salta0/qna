@@ -1,0 +1,35 @@
+.row
+  .col-xs-12
+    - if can? :update, @user
+      p= link_to "Настройки аккаунта", edit_user_registration_path
+      p= link_to "Редактировать профиль", '', class: "edit-user-link"
+      hr
+  .col-xs-12.col-sm-5.col-md-3
+    .edit-user
+      = simple_form_for @user, remote: true do |f|
+        .user-errors
+        = f.input :avatar, label: "Фото", as: :file
+        = f.input :remove_avatar, inline_label: "Удалить фото", as: :boolean
+        = f.input :name, label: "Имя", required: true
+        = f.input :location, label: "Откуда"
+        = f.input :description, label: "О себе", as: :text
+        = f.submit "Сохранить", class: "btn btn-primary"
+        = link_to "Отмена", "", class: "close-link"
+
+.row
+  .col-md-12.col-sm-5.col-md-3
+    - if @user.avatar?
+      .col-xs-12.col-sm-6.col-md-3
+        = image_tag(@user.avatar.url)
+    .col-xs-12.col-sm-6.col-md-4
+      table class="table"
+        tbody
+          tr
+            td Имя
+            td = @user.name
+          tr
+            td Откуда
+            td = @user.location
+          tr
+            td О себе
+            td = @user.description

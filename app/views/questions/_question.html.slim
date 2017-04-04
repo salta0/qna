@@ -1,0 +1,58 @@
+.row
+  .question id="question-#{@question.id}"
+    .col-xs-12.col-sm-offset-2.col-sm-8.col-md-offset-3.col-md-6
+      .col-xs-12
+        - cache [ 'question', @question ] do
+            .content
+                h3 = @question.title
+                p = @question.body
+
+      .col-xs-12
+        = render 'shared/vote', object: @question, up: vote_up_question_path(@question),
+          down: vote_down_question_path(@question), reset: vote_reset_question_path(@question)
+
+      .col-xs-12.manage-links.text-center
+        p
+        ||
+        = link_to @question.user.name, @question.user, class: "glyphicon glyphicon-user"
+        - cache [ 'question-info', @question ] do
+          ||
+          = @question.created_at.strftime("%d.%m.%y")
+          ||
+          = link_to "", "", class: "glyphicon glyphicon-comment", id: "question-comments-link"
+          ||
+          = link_to "", "", id: "question-attachments-link", class: "glyphicon glyphicon-file"
+        - if can? :modify, @question
+          ||
+          = link_to '', @question, method: :delete, class: 'glyphicon glyphicon-trash', title: "Удалить"
+          ||
+          = link_to '', '', class: 'edit-question-link glyphicon glyphicon-pencil', title: "Редактировать"
+        ||
+        = render 'subscriptions/subscription'
+        ||
+
+      .col-xs-12
+        .edit-question
+          = simple_form_for @question, remote: true do |f|
+            .question-errors
+            = f.input :title, label: "Тема"
+            = f.input :body, label: "Проблема"
+            = f.submit 'Сохранить', class: 'btn btn-primary'
+
+      .col-xs-12
+        .attachments#question-attachments
+          = link_to "Закрыть", "", class: "close-link"
+          = render 'shared/attachments', object: @question
+          - if signed_in? && current_user.author_of?(@question)
+            = form_for @question, html: { class: "add-file-question"}, remote: true do |f|
+              = render 'attachments/form', object: @question.attachments.build, f: f
+
+      .col-xs-12
+        .comments#question-comments
+          = link_to "Закрыть", "", class: "close-link"
+          .comments-list
+            - if @question.comments.present?
+                p Комментарии:
+                = render @question.comments
+          - if can? :create, Comment
+              = render 'comments/form', comment: @question.comments.new, commentable: @question

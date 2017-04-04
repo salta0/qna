@@ -1,0 +1,11 @@
+.row
+  .col-xs-12.col-sm-offset-2.col-sm-8.col-md-offset-3.col-md-6.question-form
+    = simple_form_for @question do |f|
+      = f.input :title, label: "Тема"
+      = f.input :body, label: "Описание проблемы"
+      = f.fields_for :attachments, @question.attachments.build do |a|
+        = render 'attachments/attachment_fields', f: a
+        .links
+          = link_to_add_association 'Добавить', f, :attachments,
+            partial: 'attachments/attachment_fields', title: "Добавить еще один файл"
+          = f.submit 'Создать', class: "btn btn-primary"

@@ -1,0 +1,8 @@
+<% if @answer.errors.present? %>
+    <% @answer.errors.full_messages.each do |message| %>
+        $('.answer-errors').addClass('alert alert-danger').html('<%= j message %>');
+    <% end %>
+<% else %>
+  $('.answers').append('<%= j render @answer %>');
+  $('.new_answer #answer_body').val('');
+<% end %>

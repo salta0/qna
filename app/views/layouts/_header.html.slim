@@ -1,0 +1,18 @@
+nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
+  .container
+    div class="navbar-header"
+      button  type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu"
+        span class="icon-bar"
+        span class="icon-bar"
+        span class="icon-bar"
+    div class="collapse navbar-collapse" id="responsive-menu"
+      ul class="nav navbar-nav navbar-left"
+        li id="logo" = link_to "QnA", root_path
+        - if signed_in?
+          li = link_to "Задать вопрос", new_question_path
+          li = link_to "Мой профиль", user_path(current_user)
+          li = link_to "Выйти", destroy_user_session_path, method: "delete"
+        - else
+          li = link_to "Аутентифицироваться", new_user_session_path
+        li = link_to "Пользователи", users_path
+      = render 'search_results/form'

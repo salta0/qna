@@ -1,0 +1,21 @@
+<% if @comment.commentable_type == "Question"%>
+  <% if @comment.errors.present? %>
+    <% @comment.errors.full_messages.each do |message| %>
+      $(".question .comment-errors").addClass('alert alert-danger').html('<%= j message %>');
+    <% end %>
+  <% else %>
+    $('.comments-list').append('<%= j render @comment %>');
+    $('.question .comment-errors').hide();
+    $('.question #comment_body').val('');
+  <% end %>
+<% else %>
+  <% if @comment.errors.present? %>
+    <% @comment.errors.full_messages.each do |message| %>
+      $('<%= "#answer-#{@comment.commentable_id}" %> .comment-errors').addClass('alert alert-danger').html('<%= j message %>');
+    <% end %>
+  <% else %>
+    $('<%= "#answer-comments-list-#{@comment.commentable_id}" %>').append('<%= j render @comment %>');
+    $('<%= "#answer-#{@comment.commentable_id}" %> .comment-errors').hide();
+    $('.answers #comment_body').val('');
+  <% end %>
+<% end %>

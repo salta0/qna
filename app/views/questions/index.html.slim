@@ -1,0 +1,31 @@
+.questions
+  = paginate @questions
+  ul class="list-unstyled"
+    - @questions.each do |question|
+      li
+        .row
+          .col-sm-7.col-md-6
+            .content
+              h3 = link_to question.title, question
+            p
+            = image_tag(question.user.avatar.thumb.url) if question.user.avatar?
+            = link_to question.user.name, question.user
+            ||
+            i.glyphicon.glyphicon-calendar = question.created_at.strftime("%d.%m.%y")
+            .hidden-sm.hidden-md.hidden-lg
+              p
+              | Голоса:
+              = question.rating
+              ||
+              | Ответов:
+              = question.answers.count
+          .hidden-xs.hidden-small
+            .col-sm-1.col-md-1
+              p Голоса:
+              h4 = question.rating
+            .col-sm-1.col-md-1
+              p Ответов:
+              h4 = question.answers.count
+        hr
+        br
+  = paginate @questions
