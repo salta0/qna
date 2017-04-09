@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '~> 5.0.0'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -36,11 +36,10 @@ gem 'responders'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'doorkeeper'
 gem 'cancancan'
 gem 'whenever'
 gem 'sidekiq'
-gem 'sidetiq'
-gem 'sinatra', '>= 1.3.0', require: nil
 gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'dotenv'
@@ -50,6 +49,7 @@ gem 'unicorn'
 gem 'redis-rails'
 gem 'mini_magick'
 gem 'kaminari'
+gem 'rails-controller-testing'
 
 group :development, :test do
   gem 'byebug'

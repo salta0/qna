@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -23,10 +22,9 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.datetime "updated_at",  null: false
     t.integer  "user_id"
     t.boolean  "best"
+    t.index ["question_id"], name: "index_answers_on_question_id", using: :btree
+    t.index ["user_id"], name: "index_answers_on_user_id", using: :btree
   end
-
-  add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
-  add_index "answers", ["user_id"], name: "index_answers_on_user_id", using: :btree
 
   create_table "attachments", force: :cascade do |t|
     t.string   "file"
@@ -34,9 +32,8 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.datetime "updated_at",      null: false
     t.integer  "attachable_id"
     t.string   "attachable_type"
+    t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type", using: :btree
   end
-
-  add_index "attachments", ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type", using: :btree
 
   create_table "authorizations", force: :cascade do |t|
     t.integer  "user_id"
@@ -44,10 +41,9 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.string   "uid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["provider", "uid"], name: "index_authorizations_on_provider_and_uid", using: :btree
+    t.index ["user_id"], name: "index_authorizations_on_user_id", using: :btree
   end
-
-  add_index "authorizations", ["provider", "uid"], name: "index_authorizations_on_provider_and_uid", using: :btree
-  add_index "authorizations", ["user_id"], name: "index_authorizations_on_user_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.text     "body"
@@ -56,11 +52,10 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.integer  "user_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.index ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
+    t.index ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
+    t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
-
-  add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
-  add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "installs", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -75,10 +70,9 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_installs_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_installs_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "installs", ["email"], name: "index_installs_on_email", unique: true, using: :btree
-  add_index "installs", ["reset_password_token"], name: "index_installs_on_reset_password_token", unique: true, using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
@@ -89,9 +83,8 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.datetime "created_at",        null: false
     t.datetime "revoked_at"
     t.string   "scopes"
+    t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
   end
-
-  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
 
   create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer  "resource_owner_id"
@@ -102,11 +95,10 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.datetime "revoked_at"
     t.datetime "created_at",        null: false
     t.string   "scopes"
+    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
   end
-
-  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
-  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
-  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: :cascade do |t|
     t.string   "name",                      null: false
@@ -116,9 +108,8 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.string   "scopes",       default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
-
-  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
     t.string   "title"
@@ -126,19 +117,17 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
+    t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
   end
-
-  add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
 
   create_table "subscriptions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "question_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_subscriptions_on_question_id", using: :btree
+    t.index ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
   end
-
-  add_index "subscriptions", ["question_id"], name: "index_subscriptions_on_question_id", using: :btree
-  add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -161,11 +150,10 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.string   "name"
     t.string   "location"
     t.text     "description"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "votes", force: :cascade do |t|
     t.integer  "value",        default: 0
@@ -174,11 +162,10 @@ ActiveRecord::Schema.define(version: 20170321155709) do
     t.integer  "user_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.index ["user_id"], name: "index_votes_on_user_id", using: :btree
+    t.index ["votable_id"], name: "index_votes_on_votable_id", using: :btree
+    t.index ["votable_type"], name: "index_votes_on_votable_type", using: :btree
   end
-
-  add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
-  add_index "votes", ["votable_id"], name: "index_votes_on_votable_id", using: :btree
-  add_index "votes", ["votable_type"], name: "index_votes_on_votable_type", using: :btree
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"

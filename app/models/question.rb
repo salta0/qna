@@ -1,10 +1,10 @@
-class Question < ActiveRecord::Base
+class Question < ApplicationRecord
   paginates_per 10
 
   include Attachable
   include Votable
   include Commentable
-  
+
   has_many :answers, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 

@@ -1,4 +1,4 @@
-class AnswerNotificationJob < ActiveJob::Base
+class AnswerNotificationJob < ApplicationJob
   queue_as :default
 
   def perform(answer)
@@ -7,7 +7,7 @@ class AnswerNotificationJob < ActiveJob::Base
     end
   end
 
-  private 
+  private
   def all_subscriptions(answer)
     answer.question.subscriptions
   end

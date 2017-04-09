@@ -1,4 +1,4 @@
-class Answer < ActiveRecord::Base
+class Answer < ApplicationRecord
   include Attachable
   include Votable
   include Commentable
@@ -20,7 +20,7 @@ class Answer < ActiveRecord::Base
   end
 
   private
-  
+
   def send_answer_notification
     AnswerNotificationJob.perform_later(self)
   end
